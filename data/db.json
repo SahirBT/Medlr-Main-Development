@@ -1,0 +1,52 @@
+{
+	"data":[
+		{
+			"id": 1,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 2,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 3,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 4,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 5,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 6,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		}
+	]
+}
