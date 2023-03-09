@@ -11,7 +11,6 @@ import { data } from '@/data/db.json';
 import Modal from '@/components/Modal';
 // import Carousel from '@/components/Carousel';
 import Footer from '@/components/Footer';
-import Login from '@/pages/Login';
 const inter = Inter({ subsets: ['latin'] });
 export default function Home() {
   
