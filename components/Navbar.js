@@ -7,6 +7,7 @@ import NavItem from './NavItem';
 import logo from '@/public/logo.png';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import isEmail from 'validator/lib/isEmail';
+
 const Navbar = () => {
   const [active, setActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -19,11 +20,11 @@ const Navbar = () => {
     password: '',
   };
   const signUpInitialValues = {
-    fname: '',
-    lname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-    confirmpassword: '',
+    confirmPassword: '',
   };
   
   const onSignInSubmit = (values,onSubmitProps) => {
@@ -31,18 +32,31 @@ const Navbar = () => {
     console.log(values);    
     onSubmitProps.setSubmitting(false);
   };
-  const onSignUpSubmit=(values,onSubmitProps)=>{
+  const onSignUpSubmit=async(values,onSubmitProps)=>{
     onSubmitProps.setSubmitting(true);
     console.log(values);    
+  //   const response = await fetch('https://medlr.vercel.app/api/signup', {
+  //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+  //    headers: {
+  //       "Content-Type": "application/json",
+  //       // 'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //      body: JSON.stringify(values), 
+  //      // body data type must match "Content-Type" header
+  //   });
+  //   // return response.json(); // parses JSON response into native JavaScript objects
+  // console.log(response.json());
+  
+   
     onSubmitProps.setSubmitting(false);
   }
   const signUpValidate=(values)=>{
     let errors = {};
-    if (!values.fname) {
-      errors.fname = "Required";
+    if (!values.firstName) {
+      errors.firstName = "Required";
     }
-    if (!values.lname) {
-      errors.lname = "Required";
+    if (!values.lastName) {
+      errors.lastName = "Required";
     }
     if (!values.password) {
       errors.password = 'Required';
@@ -52,7 +66,12 @@ const Navbar = () => {
     } else if (!isEmail(values.email)) {
       errors.email = 'Invalid Email';
     }
+    if(!values.confirmPassword){
+      errors.confirmPassword = 'Required';
 
+    }else if(values.confirmPassword!==values.password){
+      errors.confirmPassword = 'Password does not match';
+    }
     if (Object.keys(errors).length !== 0) {
       setError(true);
     } else {
@@ -1745,8 +1764,8 @@ const Navbar = () => {
                           First Name
                         </label>
                         <Field
-                          id="fname"
-                          name="fname"
+                          id="firstName"
+                          name="firstName"
                           type="text"
                           autoComplete="name"
                           required
@@ -1759,8 +1778,8 @@ const Navbar = () => {
                           Last Name
                         </label>
                         <Field
-                          id="lname"
-                          name="lname"
+                          id="lastName"
+                          name="lastName"
                           type="text"
                           autoComplete="name"
                           required
@@ -1797,12 +1816,12 @@ const Navbar = () => {
                         />
                       </div>
                       <div>
-                        <label htmlFor="confirmpassword" className="sr-only">
+                        <label htmlFor="confirmPassword" className="sr-only">
                           Confirm Password
                         </label>
                         <Field
-                          id="confirmpassword"
-                          name="confirmpassword"
+                          id="confirmPassword"
+                          name="confirmPassword"
                           type="password"
                           autoComplete="current-password"
                           required
