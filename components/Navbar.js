@@ -31,12 +31,38 @@ const Navbar = () => {
     console.log(values);    
     onSubmitProps.setSubmitting(false);
   };
-  const onSignUpSubmit=()=>{
+  const onSignUpSubmit=(values,onSubmitProps)=>{
+    onSubmitProps.setSubmitting(true);
+    console.log(values);    
+    onSubmitProps.setSubmitting(false);
+  }
+  const signUpValidate=(values)=>{
+    let errors = {};
+    if (!values.fname) {
+      errors.fname = "Required";
+    }
+    if (!values.lname) {
+      errors.lname = "Required";
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!isEmail(values.email)) {
+      errors.email = 'Invalid Email';
+    }
 
+    if (Object.keys(errors).length !== 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+
+    return errors;
   }
-  const signUpValidate={
     
-  }
+  
 
   const signInValidate = (values) => {
     let errors = {};
@@ -929,9 +955,9 @@ const Navbar = () => {
                       Welcome To Medlr
                     </h2>
                     <svg
-                      width="270"
+                      width="390"
                       height="261"
-                      viewBox="0 0 270 261"
+                      viewBox="16 0 250 261"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -1813,9 +1839,9 @@ const Navbar = () => {
                       Welcome To Medlr
                     </h2>
                     <svg
-                      width="270"
-                      height="261"
-                      viewBox="0 0 270 261"
+                     width="390"
+                     height="261"
+                     viewBox="16 0 250 261"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
