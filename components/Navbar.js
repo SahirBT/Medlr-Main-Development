@@ -31,6 +31,12 @@ const Navbar = () => {
     console.log(values);    
     onSubmitProps.setSubmitting(false);
   };
+  const onSignUpSubmit=()=>{
+
+  }
+  const signUpValidate={
+    
+  }
 
   const signInValidate = (values) => {
     let errors = {};
