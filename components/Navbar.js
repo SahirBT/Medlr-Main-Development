@@ -7,6 +7,9 @@ import NavItem from './NavItem';
 import logo from '@/public/logo.png';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import isEmail from 'validator/lib/isEmail';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -14,74 +17,49 @@ const Navbar = () => {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [error, setError] = useState(false);
+  const closeModal=()=>{
+    setShowModal(false);
+    setShowModal2(false);
+    setShowModal3(false);
+  }
 
+  // const signInInitialValues = {
+  //   email: 'yuvraj2899@gmail.com',
+  //   password: '123456789',
+  // };
   const signInInitialValues = {
     email: '',
     password: '',
   };
-  const signUpInitialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
   
-  const onSignInSubmit = (values,onSubmitProps) => {
+  const onSignInSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
-    console.log(values);    
+    console.log(values);
+    console.log('Submit button clicked');
+    axios
+      .post('http://localhost:5000/api/signin', values)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          Cookies.set('userInfo', res.data.token);
+          console.log(Cookies.get('userInfo'))
+          toast.success('Signed In');
+          onSubmitProps.resetForm();
+          closeModal();
+        } else {
+          toast.error('Something Went Wrong');
+        }
+      })
+      .catch((err) => {
+        // console.log(err.response.data.success)
+        if(err.response && err.response.data && !err.response.data.success){
+          // console.log(err.response.data.message)
+          toast.error(err.response.data.message)
+        }
+      });
+
     onSubmitProps.setSubmitting(false);
   };
-  const onSignUpSubmit=async(values,onSubmitProps)=>{
-    onSubmitProps.setSubmitting(true);
-    console.log(values);    
-  //   const response = await fetch('https://medlr.vercel.app/api/signup', {
-  //     method: "POST", // *GET, POST, PUT, DELETE, etc.
-  //    headers: {
-  //       "Content-Type": "application/json",
-  //       // 'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //      body: JSON.stringify(values), 
-  //      // body data type must match "Content-Type" header
-  //   });
-  //   // return response.json(); // parses JSON response into native JavaScript objects
-  // console.log(response.json());
-  
-   
-    onSubmitProps.setSubmitting(false);
-  }
-  const signUpValidate=(values)=>{
-    let errors = {};
-    if (!values.firstName) {
-      errors.firstName = "Required";
-    }
-    if (!values.lastName) {
-      errors.lastName = "Required";
-    }
-    if (!values.password) {
-      errors.password = 'Required';
-    }
-    if (!values.email) {
-      errors.email = 'Required';
-    } else if (!isEmail(values.email)) {
-      errors.email = 'Invalid Email';
-    }
-    if(!values.confirmPassword){
-      errors.confirmPassword = 'Required';
-
-    }else if(values.confirmPassword!==values.password){
-      errors.confirmPassword = 'Password does not match';
-    }
-    if (Object.keys(errors).length !== 0) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-
-    return errors;
-  }
-    
-  
 
   const signInValidate = (values) => {
     let errors = {};
@@ -94,6 +72,82 @@ const Navbar = () => {
       errors.email = 'Invalid Email';
     }
 
+    if (Object.keys(errors).length !== 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+
+    return errors;
+  };
+
+  // const signUpInitialValues = {
+  //   firstName: 'yuiiyy',
+  //   lastName: 'asdasdadasdfgd',
+  //   contactNumber: '6236963558',
+  //   email: 'yuvraj2899@gmail.com',
+  //   password: '123456789',
+  //   confirmPassword: '123456789',
+  // };
+  const signUpInitialValues = {
+    firstName: '',
+    lastName: '',
+    contactNumber: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+
+  const onSignUpSubmit = (values, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
+    console.log(values);
+    console.log('Submit button clicked');
+    axios
+      .post('http://localhost:5000/api/signup', values)
+      .then((res) => {
+        // console.log(res.response);
+        if (res.data.success) {
+          toast.success('Verification Email Sent');
+          onSubmitProps.resetForm();
+          closeModal();
+        } else {
+          toast.error('Something Went Wrong');
+        }
+      })
+      .catch((err) => {
+        // console.log(err.response.data.success)
+        if(err.response && err.response.data && !err.response.data.success){
+          // console.log(err.response.data.message)
+          toast.error(err.response.data.message)
+        }
+      });
+
+    onSubmitProps.setSubmitting(false);
+  };
+  const signUpValidate = (values) => {
+    let errors = {};
+    if (!values.contactNumber) {
+      errors.contactNumber = 'Required';
+    }
+    if (!values.firstName) {
+      errors.firstName = 'Required';
+    }
+    if (!values.lastName) {
+      errors.lastName = 'Required';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!isEmail(values.email)) {
+      errors.email = 'Invalid Email';
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'Required';
+    } else if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = 'Password does not match';
+    }
     if (Object.keys(errors).length !== 0) {
       setError(true);
     } else {
@@ -936,13 +990,13 @@ const Navbar = () => {
                       />
                     </svg>
                   </div>
-                 
+
                   <form className="mt-8 space-y-6" action="#" method="POST">
                     <input type="hidden" name="remember" defaultValue="true" />
                     <hr />
                     <div>
                       <button
-                        type="submit"
+                        type="button"
                         className="group relative flex w-full justify-center rounded-md bg-[#F1CD4B] py-2 px-3 my-2 text-sm font-semibold text-black hover:bg-[#00BFBE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00BFBE]"
                         onClick={() => {
                           setShowModal3(true);
@@ -952,7 +1006,7 @@ const Navbar = () => {
                         Sign in
                       </button>
                       <button
-                        type="submit"
+                        type="button"
                         className="group relative flex w-full justify-center rounded-md bg-white border-solid border-2 border-black py-2 px-3 text-sm font-semibold text-black hover:bg-[#00BFBE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00BFBE]"
                         onClick={() => {
                           setShowModal2(true);
@@ -1741,7 +1795,7 @@ const Navbar = () => {
 
                     <p className="mt-2 text-center text-sm text-gray-600">
                       Or{' '}
-                      <div
+                      <span
                         className="font-medium text-black hover:text-[#00BFBE]"
                         onClick={() => {
                           setShowModal3(true);
@@ -1749,103 +1803,122 @@ const Navbar = () => {
                         }}
                       >
                         Sign in
-                      </div>
+                      </span>
                     </p>
                   </div>
                   <Formik
                     onSubmit={onSignUpSubmit}
                     initialValues={signUpInitialValues}
-                    validate={signUpValidate}>
-                  <Form className="mt-8 space-y-6" action="#" method="POST">
-                    <input type="hidden" name="remember" defaultValue="true" />
-                    <div className="-space-y-px rounded-md shadow-sm">
-                      <div>
-                        <label htmlFor="First-Name" className="sr-only">
-                          First Name
-                        </label>
-                        <Field
-                          id="firstName"
-                          name="firstName"
-                          type="text"
-                          autoComplete="name"
-                          required
-                          className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
-                          placeholder="First Name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="Last-Name" className="sr-only">
-                          Last Name
-                        </label>
-                        <Field
-                          id="lastName"
-                          name="lastName"
-                          type="text"
-                          autoComplete="name"
-                          required
-                          className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
-                          placeholder="Last Name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email-address" className="sr-only">
-                          Email address
-                        </label>
-                        <Field
-                          id="email-address"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
-                          required
-                          className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
-                          placeholder="Email address"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="password" className="sr-only">
-                          Password
-                        </label>
-                        <Field
-                          id="password"
-                          name="password"
-                          type="password"
-                          autoComplete="current-password"
-                          required
-                          className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
-                          placeholder="Password"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="confirmPassword" className="sr-only">
-                          Confirm Password
-                        </label>
-                        <Field
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          type="password"
-                          autoComplete="current-password"
-                          required
-                          className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
-                          placeholder="Confirm Password"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <button
-                        type="submit"
-                        className="group relative flex w-full justify-center rounded-md bg-[#F1CD4B] py-2 px-3 text-sm font-semibold text-black hover:bg-[#00BFBE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00BFBE]"
-                      >
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                          <LockClosedIcon
-                            className="h-5 w-5  group-hover:text-white"
-                            aria-hidden="true"
+                    validate={signUpValidate}
+                  >
+                    <Form className="mt-8 space-y-6" action="#" method="POST">
+                      <input
+                        type="hidden"
+                        name="remember"
+                        defaultValue="true"
+                      />
+                      <div className="-space-y-px rounded-md shadow-sm">
+                        <div>
+                          <label htmlFor="First-Name" className="sr-only">
+                            First Name
+                          </label>
+                          <Field
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            autoComplete="name"
+                            required
+                            className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="First Name"
                           />
-                        </span>
-                        Sign Up
-                      </button>
-                    </div>
-                  </Form>
+                        </div>
+                        <div>
+                          <label htmlFor="Last-Name" className="sr-only">
+                            Last Name
+                          </label>
+                          <Field
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            autoComplete="name"
+                            required
+                            className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="Last Name"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="contactNumber" className="sr-only">
+                            Contact Number
+                          </label>
+                          <Field
+                            id="contactNumber"
+                            name="contactNumber"
+                            type="number"
+                            autoComplete="contact-number"
+                            required
+                            className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="Contact Number"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="email-address" className="sr-only">
+                            Email address
+                          </label>
+                          <Field
+                            id="email-address"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="Email address"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="password" className="sr-only">
+                            Password
+                          </label>
+                          <Field
+                            id="password"
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="Password"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="confirmPassword" className="sr-only">
+                            Confirm Password
+                          </label>
+                          <Field
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-[#00BFBE] sm:text-sm sm:leading-6"
+                            placeholder="Confirm Password"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <button
+                          type="submit"
+                          className="group relative flex w-full justify-center rounded-md bg-[#F1CD4B] py-2 px-3 text-sm font-semibold text-black hover:bg-[#00BFBE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00BFBE]"
+                        >
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <LockClosedIcon
+                              className="h-5 w-5  group-hover:text-white"
+                              aria-hidden="true"
+                            />
+                          </span>
+                          Sign Up
+                        </button>
+                      </div>
+                    </Form>
                   </Formik>
                 </div>
               </div>
@@ -1858,9 +1931,9 @@ const Navbar = () => {
                       Welcome To Medlr
                     </h2>
                     <svg
-                     width="390"
-                     height="261"
-                     viewBox="16 0 250 261"
+                      width="390"
+                      height="261"
+                      viewBox="16 0 250 261"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -2625,7 +2698,7 @@ const Navbar = () => {
 
                     <p className="mt-2 text-center text-sm text-gray-600">
                       Or{' '}
-                      <div
+                      <span
                         className="font-medium text-black hover:text-[#00BFBE]"
                         onClick={() => {
                           setShowModal2(true);
@@ -2633,7 +2706,7 @@ const Navbar = () => {
                         }}
                       >
                         Sign Up
-                      </div>
+                      </span>
                     </p>
                   </div>
                   <Formik
