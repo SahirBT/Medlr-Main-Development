@@ -24,7 +24,7 @@ const SearchBar = () => {
                 </svg>
                 <input
                     type="number"
-                    className="block w-full text-white text-sm bg-transparent text-center"
+                    className=" w-full text-white text-sm bg-transparent text-center"
                     placeholder="Pincode"
                 />
             </div>
