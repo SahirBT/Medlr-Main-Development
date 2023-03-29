@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 const Footer = () => {
 
   return (
     <>
-      <div className=" mx-auto">
+      <div className="mt-12 mx-auto">
         <footer className="p-4 h-96 bg-white sm:p-6   bg-gradient-to-b from-[#018686] to-[#00403F]" >
           <div className="md:flex md:justify-between mt-28 ">
            
@@ -19,7 +21,8 @@ const Footer = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Terms And Conditiions</h3>
+                <a href="./tandc">
+                <h3 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Terms And Conditiions</h3></a>
                 <ul>
                   <li className="mb-4">
                     <a href="#" target="_blank" className="text-sm font-semibold text-gray-900 uppercase dark:text-white">Contact Us</a>
