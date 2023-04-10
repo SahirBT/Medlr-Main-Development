@@ -22,9 +22,11 @@ const SearchBar = () => {
                     <path d="M15.08 18.9525C16.7233 11.9938 27.3567 11.9938 29 18.9525C29.9425 23.0375 27.3325 26.505 25.0367 28.6425C24.2282 29.3977 23.1554 29.8187 22.04 29.8187C20.9246 29.8187 19.8518 29.3977 19.0433 28.6425C16.7475 26.505 14.1133 23.0375 15.08 18.9525Z" stroke="#EAEAEA" stroke-width="4"/>
                     <path d="M21.9796 20.6625H22.0007" stroke="#EAEAEA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <input
+                <textarea
                     type="number"
-                    className=" w-full text-white text-sm bg-transparent text-center"
+                    className="text-white text-xs bg-transparent text-center border-transparent border-b-white border-2 resize-none"
+                    rows={1}
+                    cols={7}
                     placeholder="Pincode"
                 />
             </div>
