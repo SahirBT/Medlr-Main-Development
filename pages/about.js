@@ -2071,6 +2071,14 @@ export default function about() {
       </div>
       {/* FAQ's section ends */}
 
+      {/* Contact Us section */}
+      <div className='flex flex-row justify-center items-center pt-10'>
+        <div className="text-center xl:text-3xl lg:text-xl font-bold text-[#2E2D28]" >
+            Contact us : socials@medlr.com
+        </div>
+      </div>
+      {/* Contact Us section ends */}
+
     </div>
   );
 }
