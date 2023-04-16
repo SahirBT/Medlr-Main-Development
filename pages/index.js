@@ -11,6 +11,7 @@ import { data } from '@/data/db.json';
 import Modal from '@/components/Modal';
 // import Carousel from '@/components/Carousel';
 import Footer from '@/components/Footer';
+import Carousel from '@/components/Carousel';
 const inter = Inter({ subsets: ['latin'] });
 export default function Home() {
   
@@ -1830,12 +1831,12 @@ export default function Home() {
           </div>
 
         
-        </div>
-        {/* <div className="continer-fluid">
-    <Slider />
-    </div> */}
+        
+        <div className="continer-fluid">
+    <Carousel />
+    </div>
    
-       
+    </div>
         {/* <div className=" mt-5 ">
            <Footer /> 
         </div> */}

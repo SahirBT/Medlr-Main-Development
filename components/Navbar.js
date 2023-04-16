@@ -18,22 +18,22 @@ const Navbar = () => {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [error, setError] = useState(false);
-  const closeModal=()=>{
+  const closeModal = () => {
     setShowModal(false);
     setShowModal2(false);
     setShowModal3(false);
     setShowModal4(false);
-  }
+  };
 
   // const signInInitialValues = {
   //   email: 'yuvraj2899@gmail.com',
   //   password: '123456789',
   // };
-  const forgotInitialValues ={
-    email:'',
-  }
+  const forgotInitialValues = {
+    email: '',
+  };
 
-  const forgotSubmit=(values,onSubmitProps)=>{
+  const forgotSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
     console.log(values);
     console.log('Submit button clicked');
@@ -42,7 +42,7 @@ const Navbar = () => {
       .then((res) => {
         // console.log(res.response);
         if (res.data.success) {
-          toast.success('Email Sent');//res.status
+          toast.success('Email Sent'); //res.status
           onSubmitProps.resetForm();
           closeModal();
         } else {
@@ -51,18 +51,18 @@ const Navbar = () => {
       })
       .catch((err) => {
         // console.log(err.response.data.success)
-        if(err.response && err.response.data && !err.response.data.success){
+        if (err.response && err.response.data && !err.response.data.success) {
           // console.log(err.response.data.message)
-          toast.error(err.response.data.message)
+          toast.error(err.response.data.message);
         }
       });
 
     onSubmitProps.setSubmitting(false);
-  }
-  
+  };
+
   const forgotValidate = (values) => {
     let errors = {};
-    
+
     if (!values.email) {
       errors.email = 'Required';
     } else if (!isEmail(values.email)) {
@@ -81,7 +81,7 @@ const Navbar = () => {
     email: '',
     password: '',
   };
-  
+
   const onSignInSubmit = (values, onSubmitProps) => {
     onSubmitProps.setSubmitting(true);
     console.log(values);
@@ -92,7 +92,7 @@ const Navbar = () => {
         console.log(res.data);
         if (res.data.success) {
           Cookies.set('userInfo', res.data.token);
-          console.log(Cookies.get('userInfo'))
+          console.log(Cookies.get('userInfo'));
           toast.success('Signed In');
           onSubmitProps.resetForm();
           closeModal();
@@ -102,9 +102,9 @@ const Navbar = () => {
       })
       .catch((err) => {
         // console.log(err.response.data.success)
-        if(err.response && err.response.data && !err.response.data.success){
+        if (err.response && err.response.data && !err.response.data.success) {
           // console.log(err.response.data.message)
-          toast.error(err.response.data.message)
+          toast.error(err.response.data.message);
         }
       });
 
@@ -166,9 +166,9 @@ const Navbar = () => {
       })
       .catch((err) => {
         // console.log(err.response.data.success)
-        if(err.response && err.response.data && !err.response.data.success){
+        if (err.response && err.response.data && !err.response.data.success) {
           // console.log(err.response.data.message)
-          toast.error(err.response.data.message)
+          toast.error(err.response.data.message);
         }
       });
 
@@ -222,8 +222,9 @@ const Navbar = () => {
     <>
       <nav
         className="flex items-center flex-wrap 
-      bg-gradient-to-b from-[#00403F] to-[#0b6f6f]
-      p-3 relative z-0">
+      bg-gradient-to-b from-[#003433] to-[#046c6a]
+      p-3 relative z-0"
+      >
         <Link href="/" className="inline-flex items-center p-2 mr-4 ">
           <div className="w-[150px] h-[50px]">
             <Image src={logo} />
@@ -2810,7 +2811,8 @@ const Navbar = () => {
                             onClick={() => {
                               setShowModal4(true);
                               setShowModal3(false);
-                            }} >
+                            }}
+                          >
                             Forgot your password?
                           </a>
                         </div>
@@ -3648,7 +3650,6 @@ const Navbar = () => {
                           />
                           <ErrorMessage name="email" />
                         </div>
-                        
                       </div>
 
                       <div>
