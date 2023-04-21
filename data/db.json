@@ -86,5 +86,27 @@
 			"question":"What kind of medicines do we have?",
 			"answer":""
 		}
+	],
+	"faqs":[
+		{
+			"question":"What is medlr?",
+			"answer":""
+		},
+		{
+			"question":"So, how exactly does this work?",
+			"answer":"Lorem ipsum dolor sit amet, adipiscing Aliquam eu sem vitae turpmaximus. Contrary popular belief.There are many variations of passages of Lorem Ipsum available, but the majority randomised."
+		},
+		{
+			"question":"What cities do we currently operate in?",
+			"answer":""
+		},
+		{
+			"question":"More Medlr Services?",
+			"answer":""
+		},
+		{
+			"question":"What kind of medicines do we have?",
+			"answer":""
+		}
 	]
 }

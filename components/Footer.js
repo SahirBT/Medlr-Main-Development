@@ -4,7 +4,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="mt-12 mx-auto">
+      <div className="mx-auto">
         <footer className="p-4 h-96 bg-white sm:p-6   bg-gradient-to-b from-[#018686] to-[#00403F]" >
           <div className="md:flex md:justify-between mt-28 ">
            
