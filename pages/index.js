@@ -4,14 +4,14 @@ import { Inter } from '@next/font/google';
 import Card from '@/components/Card';
 import { useState } from 'react';
 import pills from '@/public/pills.svg';
-import Slider from '@/components/Carousel';
+
 import SearchBar from '@/components/SearchBar';
 
 import { data } from '@/data/db.json';
 import Modal from '@/components/Modal';
 // import Carousel from '@/components/Carousel';
 import Footer from '@/components/Footer';
-import Carousel from '@/components/Carousel';
+import Carousel from '@/components/Carousel.js';
 const inter = Inter({ subsets: ['latin'] });
 export default function Home() {
   
@@ -1826,17 +1826,16 @@ export default function Home() {
 
         {/* Savings section */}
         <div className="bg-[#1D4042] flex flex-col items-center">
-          <div className="text-5xl text-[#FFFFFF] text-center font-bold w-max mt-20 mb-40">
+          <div className="text-5xl text-[#FFFFFF] text-center font-bold w-max mt-20">
             Sample Savings
           </div>
 
-        
-        
-        <div className="continer-fluid">
-    <Carousel />
-    </div>
+          {/* Carousel section */}
+          <div className="w-full my-20">
+            <Carousel name= "Tykerb" tabs= "250mg 30 Tablets" cost = "13350" discount= "11982" src= "/savings/tata.png"/>
+          </div>
    
-    </div>
+        </div>
         {/* <div className=" mt-5 ">
            <Footer /> 
         </div> */}

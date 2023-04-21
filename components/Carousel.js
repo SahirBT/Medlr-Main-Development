@@ -4,188 +4,44 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import Image from "next/image";
 import Card from "./Card";
 
+import {data} from "@/data/db.json"
+
 
 export default function Carousel({name, tabs, cost, discount, src}) {
+    const cardSize = Object.keys(data).length;
     return (
-        <div className="container mx-auto">
-            <div className="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4">
+        <div className="max-w-[100vw] flex pl-16 overflow-x-hidden items-start">
+            <div className="flex justify-start w-full h-full pb-24 sm:pb-8">
                 {/* Carousel for desktop and large size devices */}
-                <CarouselProvider className="lg:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={8} visibleSlides={3} step={1} infinite={true}>
-                    <div className="w-full relative flex items-center justify-center">
-                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
-                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <CarouselProvider className="lg:block hidden" naturalSlideWidth={200} isIntrinsicHeight={true} totalSlides={cardSize} visibleSlides={4} step={0.5} infinite={true}>
+                    <div className="w-full relative flex items-center gap-x-8">
+
+                    {/* previous button */}
+                        <ButtonBack role="button" aria-label="slide backward" className="z-30 focus:outline-none p-4 rounded-full ring-2 ring-offset-4 ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={14} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </ButtonBack>
-                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+
+                        {/* Main carousel */}
+                        <div className="w-full h-full mx-auto">
                             <Slider>
                                 <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
-                                    <Slide index={0}>
-                                        {/* <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/fDngH9G/carosel-1.png" alt="black chair and white table" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 1</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
+                                    {data.map((card, idx)=>(
+                                        <Slide index={idx}>
+                                            <div className="pt-[30%]">
+                                            <Card key={idx} {...card}/>
                                             </div>
-                                        </div> */}
-                                        <div className='bg-[#E0E0E0] rounded-[20px] flex flex-col items-center w-full '>
-        <div className='w-[222px] h-[222px] flex items-center mt-[-30%]'>
-            <Image src={src} width={300} height={300} alt='no-image' className='rounded-full bg-[#EBDCA51F]'/>
-        </div>
-        <div className='mx-5  flex flex-col items-center mt-6 mb-10 px-2'>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-              {name}
-          </div>
-          <div className='text-2xl text-[#302F2C] text-center font-semibold w-max mb-6'>
-            {tabs}
-          </div>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-            MRP: <span className='line-through decoration-[#AE2F1D]'>{cost}</span> {discount}
-          </div>
-        </div>
-    </div>
-                                    </Slide>
-                                    <Slide index={1}>
-                                        <div className='bg-[#E0E0E0] rounded-[20px] flex flex-col items-center w-full'>
-        <div className='w-[222px] h-[222px] flex items-center mt-[-30%]'>
-            <Image src={src} width={300} height={300} alt='no-image' className='rounded-full bg-[#EBDCA51F]'/>
-        </div>
-        <div className='mx-5  flex flex-col items-center mt-6 mb-10 px-2'>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-              {name}
-          </div>
-          <div className='text-2xl text-[#302F2C] text-center font-semibold w-max mb-6'>
-            {tabs}
-          </div>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-            MRP: <span className='line-through decoration-[#AE2F1D]'>{cost}</span> {discount}
-          </div>
-        </div>
-    </div>
-                                    </Slide>
-                                    <Slide index={2}>
-                                        <Card />
-                                    </Slide>
-                                    <Slide index={3}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/rFsGfr5/carosel-4.png" alt="sitting area" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={4}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/fDngH9G/carosel-1.png" alt="black chair and white table" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={5}>
-                                        <div className='bg-[#E0E0E0] rounded-[20px] flex flex-col items-center w-full'>
-        <div className='w-[222px] h-[222px] flex items-center mt-[-30%]'>
-            <Image src={src} width={300} height={300} alt='no-image' className='rounded-full bg-[#EBDCA51F]'/>
-        </div>
-        <div className='mx-5  flex flex-col items-center mt-6 mb-10 px-2'>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-              {name}
-          </div>
-          <div className='text-2xl text-[#302F2C] text-center font-semibold w-max mb-6'>
-            {tabs}
-          </div>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-            MRP: <span className='line-through decoration-[#AE2F1D]'>{cost}</span> {discount}
-          </div>
-        </div>
-    </div>
-                                    </Slide>
-                                    <Slide index={6}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/tCfVky2/carosel-3.png" alt="sitting area" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={7}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/rFsGfr5/carosel-4.png" alt="sitting area" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={8}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/fDngH9G/carosel-1.png" alt="black chair and white table" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="texlg:t-xl le leading-4 text-basealg:ding-tight text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={9}>
-                                        <div className='bg-[#E0E0E0] rounded-[20px] flex flex-col items-center w-full'>
-        <div className='w-[222px] h-[222px] flex items-center mt-[-30%]'>
-            <Image src={src} width={300} height={300} alt='no-image' className='rounded-full bg-[#EBDCA51F]'/>
-        </div>
-        <div className='mx-5  flex flex-col items-center mt-6 mb-10 px-2'>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-              {name}
-          </div>
-          <div className='text-2xl text-[#302F2C] text-center font-semibold w-max mb-6'>
-            {tabs}
-          </div>
-          <div className='text-3xl text-[#302F2C] text-center font-semibold w-max'>
-            MRP: <span className='line-through decoration-[#AE2F1D]'>{cost}</span> {discount}
-          </div>
-        </div>
-    </div>
-                                    </Slide>
-                                    <Slide index={10}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/tCfVky2/carosel-3.png" alt="sitting area" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
-                                    <Slide index={11}>
-                                        <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                                            <img src="https://i.ibb.co/rFsGfr5/carosel-4.png" alt="sitting area" className="object-cover object-center w-full" />
-                                            <div className="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                                                <h2 className="lg:text-xl leading-4 text-base lg:leading-5 text-white">Catalog 2</h2>
-                                                <div className="flex h-full items-end pb-6">
-                                                    <h3 className="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white">Minimal Interior</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Slide>
+                                        </Slide>
+                                    ))}
                                 </div>
                             </Slider>
                         </div>
-                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
-                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        
+                        {/* Next button */}
+                        {/* Bug: button not visible on screen */}
+                        <ButtonNext role="button" aria-label="slide forward" className="z-30 focus:outline-none p-4 rounded-full ring-2 ring-offset-4 ring-gray-400 cursor-pointer" id="next">
+                            <svg width={14} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </ButtonNext>

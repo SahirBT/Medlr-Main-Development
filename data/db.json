@@ -47,6 +47,22 @@
 			"cost": 13350,
 			"discount": 11982,
 			"src": "/savings/tata.png"
+		},
+		{
+			"id": 7,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
+		},
+		{
+			"id": 8,
+			"name": "Tykerb",
+			"tabs": "250mg 30 Tablets",
+			"cost": 13350,
+			"discount": 11982,
+			"src": "/savings/tata.png"
 		}
 	],
 	"faqs":[
